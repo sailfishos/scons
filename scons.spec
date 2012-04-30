@@ -1,9 +1,7 @@
 Name:           scons
-Version:        2.0.1
+Version:        2.1.0
 Release:        1
-
 Summary:        An Open Source software construction tool
-
 Group:          Development/Tools
 License:        MIT
 URL:            http://www.scons.org
@@ -27,24 +25,17 @@ really changed, not just when the timestamp has been touched.  SCons
 supports side-by-side variant builds, and is easily extended with user-
 defined Builder and/or Scanner objects.
 
-
 %prep
 %setup -q 
 
-
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES --install-lib=%{_prefix}/lib/scons --install-scripts=%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}
 mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %docs_package 
 
@@ -53,4 +44,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc  LICENSE.txt 
 %{_bindir}/*
 %{_prefix}/lib/scons
-
