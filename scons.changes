@@ -1,3 +1,6 @@
+* Fri Jan 11 2019 Tomi Leppänen <tomi.leppanen@jolla.com> - 2.1.0-2
+- [packaging] Rename scons-docs to scons-doc. Contributes to JB#38578
+
 * Mon Apr 30 2012 Marko Saukko <sage@merproject.org> - 2.1.0
 - Fixes MER#303: update scons to 2.1.0
 

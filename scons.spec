@@ -1,6 +1,6 @@
 Name:           scons
 Version:        2.1.0
-Release:        1
+Release:        2
 Summary:        An Open Source software construction tool
 Group:          Development/Tools
 License:        MIT
@@ -25,6 +25,15 @@ really changed, not just when the timestamp has been touched.  SCons
 supports side-by-side variant builds, and is easily extended with user-
 defined Builder and/or Scanner objects.
 
+%package doc
+Summary:   Documentation for %{name}
+Group:     Documentation
+Requires:  %{name} = %{version}-%{release}
+Obsoletes: %{name}-docs
+
+%description doc
+Man pages for %{name}.
+
 %prep
 %setup -q 
 
@@ -37,10 +46,12 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_mandir}
 mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
 
-%docs_package 
-
 %files
 %defattr(-,root,root,-)
-%doc  LICENSE.txt 
+%license LICENSE.txt
 %{_bindir}/*
 %{_prefix}/lib/scons
+
+%files doc
+%defattr(-,root,root,-)
+%{_mandir}/man1/%{name}*.*
