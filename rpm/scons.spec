@@ -2,16 +2,13 @@ Name:           scons
 Version:        3.0.5
 Release:        1
 Summary:        An Open Source software construction tool
-Group:          Development/Tools
 License:        MIT
 URL:            http://www.scons.org
-Source:         http://prdownloads.sourceforge.net/scons/scons-%{version}.tar.gz
+Source:         %{name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python3-devel
 BuildRequires:  fdupes
-# Currently mer:core does not have this package. scons works without it,
-# but manpages are not generated correctly.
-# BuildRequires:  python3-lxml
+BuildRequires:  python3-lxml
 
 %description
 SCons is an Open Source software construction tool--that is, a build
@@ -30,7 +27,6 @@ defined Builder and/or Scanner objects.
 
 %package doc
 Summary:   Documentation for %{name}
-Group:     Documentation
 Requires:  %{name} = %{version}-%{release}
 Obsoletes: %{name}-docs
 
@@ -71,8 +67,8 @@ mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
 %{_bindir}/scons-configure-cache
 %{_bindir}/scons-time
 %{_bindir}/sconsign
-%{_libdir}/python3.*/site-packages/SCons
-%{_libdir}/python3.*/site-packages/scons*.egg-info
+%{python3_sitelib}/SCons
+%{python3_sitelib}/scons*.egg-info
 
 %files doc
 %defattr(-,root,root,-)
