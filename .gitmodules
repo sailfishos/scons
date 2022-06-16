@@ -1,3 +1,3 @@
 [submodule "upstream"]
 	path = upstream
-	url = git://github.com/SCons/scons.git
+	url = https://github.com/sailfishos-mirror/scons.git
