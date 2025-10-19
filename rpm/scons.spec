@@ -1,9 +1,9 @@
 Name:           scons
-Version:        3.0.5
+Version:        4.5.1
 Release:        1
 Summary:        An Open Source software construction tool
 License:        MIT
-URL:            http://www.scons.org
+URL:            https://github.com/sailfishos/scons/
 Source:         %{name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python3-devel
@@ -35,42 +35,28 @@ Man pages for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/upstream
-sed -i 's|/usr/bin/env python|%{__python3}|' src/script/*
+sed -i 's|/usr/bin/env python|%{__python3}|' scripts/*
 
 %build
-%{__python3} bootstrap.py build/scons
-cd build/scons
-CFLAGS="$RPM_OPT_FLAGS" %{__python3} setup.py build
+%{__python3} scripts/scons.py --include-dir= -j1 SKIP_DOC=True
 
 %install
-pushd build/scons
-rm -rf $RPM_BUILD_ROOT
-%{__python3} setup.py install \
- --root=$RPM_BUILD_ROOT \
- --record=INSTALLED_FILES \
- --standard-lib \
- --install-scripts=%{_bindir} \
- --no-install-bat \
- --no-version-script
+%py3_install -- --install-scripts=%{_bindir} --install-data=%{_datadir}
+
 %fdupes $RPM_BUILD_ROOT%{_libdir}
-mkdir -p $RPM_BUILD_ROOT%{_mandir}
 mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-popd
 install -m 644 -t $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version} \
-        src/CHANGES.txt README.rst src/RELEASE.txt
-mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
+        CHANGES.txt README.rst RELEASE.txt
+
+rm -f %{buildroot}%{_datadir}/*.1
 
 %files
-%defattr(-,root,root,-)
 %license LICENSE
 %{_bindir}/scons
 %{_bindir}/scons-configure-cache
-%{_bindir}/scons-time
 %{_bindir}/sconsign
 %{python3_sitelib}/SCons
-%{python3_sitelib}/scons*.egg-info
+%{python3_sitelib}/SCons*.egg-info
 
 %files doc
-%defattr(-,root,root,-)
 %doc %{_docdir}/%{name}-%{version}
-%{_mandir}/man1/%{name}*.*
